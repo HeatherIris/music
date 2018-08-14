@@ -1,0 +1,193 @@
+*{
+    margin:0px;
+    padding: 0px;
+    list-style: none;
+    font-size: 12px/20px;
+
+}
+body {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+.wrapper{
+    position: s;
+    width:100vw;
+    height: 100vh;
+    padding-top:60px;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,0.3);
+    .img-wrapper{
+    
+        width: 50%;
+        height:0; 
+        padding-top: 50%;
+        position: relative;
+        margin: 0 auto;
+        .song-img{
+            position: absolute;
+            left:0px;
+            right:0px;
+            bottom: 0px;
+            top:0px;
+            img{
+                width:100%;
+                height:100%;
+            }
+        }
+      }
+    .song-info{
+        height:126px;
+        margin-top: 40px;
+        width:100%; 
+        text-align: center;
+        .song-name{
+                font-size: 24px;
+                line-height: 36px;
+                margin-bottom: 8px;
+                color:rgba(255,255,255,0.8);
+                overflow: hidden;//多余打点
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                
+
+        }
+        .singer-name,.album-name{
+            font-size:12px;
+            line-height: 16px;
+            margin-bottom: 6px;
+            color:rgba(255,255,255,0.6)
+        
+        }
+            
+        
+
+        
+    }
+    .process{
+        display:flex;//使其自适应
+        .cur-time,.all-time{
+            
+            height:40px;
+            width:60px;
+            color: #fff;
+            font-size: 16px;
+            line-height: 40px;
+            text-align: center;
+        }
+        .pro-wrapper{
+            flex:1;
+            position: relative;
+            overflow: hidden;
+            left:3px;
+            .pro-bottom,.pro-top{
+                height:1px;
+                width:100%;
+                position: absolute;
+                top:20px;
+            }
+                .pro-bottom{
+                    background-color: rgba(255,255,255,0.6)
+                }
+                .pro-top{
+                    background-color: #fff;
+                    transform:translateX(-100%);
+                    .slider-point{  
+                        position: absolute;
+                        width:20px;
+                        height:20px; 
+                        right:-10px;
+                        top:-9px;
+                        display: flex;
+                        justify-content:center;
+                        align-items: center; 
+                    }
+                    .slider-point::after{
+                        content: '';
+                        display:block;  
+                        height:5px;
+                        width:5px;
+                        border-radius: 50%;
+                        background-color: #fff;
+                    }
+                }
+        }
+       
+        }
+    }
+    .song-control{
+        height:50px;
+        position: absolute;
+        width:100%;
+        bottom: 0px;
+        display:flex;
+        .btn{
+            flex: 1;
+            background-size:20px 20px;
+            background-position: 50%;
+            background-repeat: no-repeat;
+        }
+        .like-btn{
+            background-image: url('/img/icon-like.png');
+
+        }
+        .prev-btn{
+            background-image: url('/img/icon-prev.png');
+
+        }
+        .play-btn{
+            background-image: url('/img/icon-play.png');
+            &.playing {
+                background-image: url("/img/icon-pause.png");
+            }
+        }
+        .next-btn{
+            background-image: url('/img/icon-next.png');
+        }
+        .list-btn{
+            background-image: url('/img/icon-list.png');
+        }
+
+}
+.play-list {
+    background-color: #fff;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    transform: translateY(100%);
+    &.show{
+        transform: translateY(0)
+    }
+    .list-header, .close-btn {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 16px;
+    }
+    .close-btn {
+        border-top: 1px solid rgba(0,0,0,.1);
+    }
+    li {
+        height: 20px;
+        line-height: 20px;
+        padding: 8px;
+        border-top: 1px solid rgba(0,0,0,.1);
+        h3 {
+            font-size: 14px;
+            color: rgba(0,0,0,.86);
+            span {
+                font-size: 12px;
+                color: rgba(0,0,0,.7)
+            }
+        }
+        &.sign{
+            h3{
+                color: rgba(231, 133, 179, 0.6);
+                span{
+                    color: rgba(231, 133, 179, 0.6);
+                }
+            }
+        }
+    }
+}
