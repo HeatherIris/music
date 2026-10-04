@@ -1,0 +1,38 @@
+[
+    {
+        "image": "/source/song_1.jpg",
+        "audio": "/source/song_1.mp3",
+        "song": "茎",
+        "album": "加尔基 精液 栗子花",
+        "singer": "椎名林檎",
+        "duration": 230,
+        "isLike": true
+    },
+    {
+        "image": "/source/song_1.jpg",
+        "audio": "/source/song_2.mp3",
+        "song": "迷彩",
+        "album": "l加尔基 精液 栗子花",
+        "singer": "椎名林檎",
+        "duration": 232,
+        "isLike": false
+    },
+    {
+        "image": "/source/song_2.jpg",
+        "audio": "/source/song_3.mp3",
+        "song": "声",
+        "album": "元服",
+        "singer": "天野月",
+        "duration": 334,
+        "isLike": false
+    },
+    {
+        "image": "/source/song_3.jpg",
+        "audio": "/source/song_4.mp3",
+        "song": "他举起右手点名",
+        "album": "冬·未了",
+        "singer": "苏打绿",
+        "duration": 222,
+        "isLike": false
+    }
+]
