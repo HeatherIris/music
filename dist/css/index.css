@@ -121,22 +121,22 @@ body {
   background-repeat: no-repeat;
 }
 .song-control .like-btn {
-  background-image: url('/img/icon-like.png');
+  background-image: url('../img/icon-like.png');
 }
 .song-control .prev-btn {
-  background-image: url('/img/icon-prev.png');
+  background-image: url('../img/icon-prev.png');
 }
 .song-control .play-btn {
-  background-image: url('/img/icon-play.png');
+  background-image: url('../img/icon-play.png');
 }
 .song-control .play-btn.playing {
-  background-image: url("/img/icon-pause.png");
+  background-image: url("../img/icon-pause.png");
 }
 .song-control .next-btn {
-  background-image: url('/img/icon-next.png');
+  background-image: url('../img/icon-next.png');
 }
 .song-control .list-btn {
-  background-image: url('/img/icon-list.png');
+  background-image: url('../img/icon-list.png');
 }
 .play-list {
   background-color: #fff;
