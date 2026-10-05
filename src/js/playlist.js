@@ -22,8 +22,8 @@
         signRed(index);
     }
     function signRed (index) {
-        $scope.find(".sign").removeClass("sign");
-        $scope.find("li").eq(index).addClass("sign");
+        $playList.find(".sign").removeClass("sign");
+        $playList.find(".list-wrapper li").eq(index).addClass("sign");
     }
     function bindEvent() {
         $playList.find(".close-btn").on("click", function () {
