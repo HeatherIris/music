@@ -22,8 +22,8 @@
         signRed(index);
     }
     function signRed (index) {
-        $scope.find(".sign").removeClass("sign");
-        $scope.find("li").eq(index).addClass("sign");
+        $playList.find(".sign").removeClass("sign");
+        $playList.find(".list-wrapper li").eq(index).addClass("sign");
     }
     function bindEvent() {
         $playList.find(".close-btn").on("click", function () {
@@ -32,13 +32,7 @@
         $playList.find("li").on("click", function () {
             var index = $(this).index();
             signRed(index);
-            $scope.trigger("player:change", [index,true]);
-            controlManager.index = index;
-            setTimeout(function () {
-                $playList.removeClass("show");
-            },500)
-            $scope.find(".play-btn").addClass("playing");
-            
+            $scope.trigger("player:change", [index, true]);
         })
     }
     root.playList = {

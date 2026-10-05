@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Music Player</title>
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
     <div class="wrapper">
-        <div class="img-wrapper">
-            <div class="song-img">
-                <img src="" alt="">
-            </div>
-        </div>
-        <div class="song-info">
-            <div class="song-name">茎</div>
-            <div class="singer-name">椎名林檎</div>
-            <div class="album-name"></div>
-        </div>
-        <div class="process">
-            <div class="cur-time">00:00</div>
-            <div class="pro-wrapper">
-                <div class="pro-bottom"></div>
-                <div class="pro-top">
-                    <div class="slider-point"></div>
+        <div class="player-card">
+            <div class="img-wrapper">
+                <div class="song-img">
+                    <img alt="">
                 </div>
             </div>
-            <div class="all-time">04:00</div>
-        </div>
-        <div class="song-control">
-            <div class="btn like-btn"></div>
-            <div class="btn prev-btn"></div>
-            <div class="btn play-btn"></div>
-            <div class="btn next-btn"></div>
-            <div class="btn list-btn"></div>
+            <div class="song-info">
+                <div class="song-name">茎</div>
+                <div class="singer-name">椎名林檎</div>
+                <div class="album-name"></div>
+            </div>
+            <div class="process">
+                <div class="pro-wrapper">
+                    <div class="pro-bottom"></div>
+                    <div class="pro-top">
+                        <div class="slider-point"></div>
+                    </div>
+                </div>
+                <div class="cur-time">00:00</div>
+                <div class="all-time">--:--</div>
+            </div>
+            <div class="song-control">
+                <div class="song-control-main">
+                    <div class="btn prev-btn"></div>
+                    <div class="btn play-btn"></div>
+                    <div class="btn next-btn"></div>
+                </div>
+                <div class="list-btn" role="button" aria-label="Playlist"></div>
+            </div>
         </div>
     </div>
     <script src="./js/zepto.min.js"></script>
