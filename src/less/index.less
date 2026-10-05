@@ -146,11 +146,21 @@ body {
     }
 }
 .song-control {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 28px;
+    width: 100%;
+    min-width: 0;
+    min-height: 64px;
     margin-top: 18px;
+    .song-control-main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        gap: 28px;
+    }
     .btn {
         flex: none;
         width: 48px;
@@ -177,10 +187,14 @@ body {
     }
 }
 .list-btn {
-    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 44px;
     height: 44px;
-    margin: 12px auto 0;
+    margin: 0;
+    flex: none;
     background-image: url("../img/icon-list.png");
     background-position: 50%;
     background-repeat: no-repeat;
@@ -254,6 +268,19 @@ body {
     }
     .song-info .song-name {
         font-size: 20px;
+    }
+    .song-control-main {
+        gap: 8px;
+    }
+    .song-control .btn {
+        width: 44px;
+        height: 44px;
+        background-size: 20px 20px;
+    }
+    .song-control .play-btn {
+        width: 56px;
+        height: 56px;
+        background-size: 28px 28px;
     }
     .play-list {
         width: 100%;
