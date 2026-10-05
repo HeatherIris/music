@@ -32,7 +32,7 @@
         $playList.find("li").on("click", function () {
             var index = $(this).index();
             signRed(index);
-            $scope.trigger("player:change", index);
+            $scope.trigger("player:change", [index, true]);
         })
     }
     root.playList = {

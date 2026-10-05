@@ -32,13 +32,7 @@
         $playList.find("li").on("click", function () {
             var index = $(this).index();
             signRed(index);
-            $scope.trigger("player:change", [index,true]);
-            controlManager.index = index;
-            setTimeout(function () {
-                $playList.removeClass("show");
-            },500)
-            $scope.find(".play-btn").addClass("playing");
-            
+            $scope.trigger("player:change", [index, true]);
         })
     }
     root.playList = {
