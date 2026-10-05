@@ -24,8 +24,7 @@ function syncPlayButton () {
         $btn.removeClass("playing");
     }
 }
-function startPlayback () {
-    var playResult = audiomanager.play();
+function handlePlayResult (playResult) {
     if (playResult && typeof playResult.then === "function") {
         return playResult.then(function () {
             process.start();
@@ -43,40 +42,81 @@ function startPlayback () {
     syncPlayButton();
     return playResult;
 }
-function bindTouch () {
-    var $sliderPoint = $scope.find(".slider-point");
-    var offset = $scope.find(".pro-wrapper").offset();
-    var left = offset.left;
-    var width = offset.width;
-    $sliderPoint.on("touchstart", function () {
-        process.stop();  //停止定时器
-    }).on("touchmove",function (e) {
-        var x = e.changedTouches[0].clientX;  //获取百分比
-        var percent = clampPercent((x - left) / width);
-        process.setPercent(percent);
-    }).on("touchend", function (e) {
-        var x = e.changedTouches[0].clientX;
-        var percent = clampPercent((x - left) / width);
-        process.setPercent(percent);
-        var index = controlmanager.index;
-        var curDuration = songList[index].duration;
-        var curTime = curDuration * percent;
-        var playResult = audiomanager.jumpToPlay(curTime);
-        if (playResult && typeof playResult.then === "function") {
-            playResult.then(function () {
-                process.start();
-                syncPlayButton();
-            }).catch(function () {
-                process.stop();
-                syncPlayButton();
-            });
-        } else {
-            if (audiomanager.status == "play") {
-                process.start();
-            }
-            syncPlayButton();
+function startPlayback () {
+    return handlePlayResult(audiomanager.play());
+}
+function percentFromEvent (e, barEl) {
+    var point = e;
+    if (e.changedTouches && e.changedTouches[0]) {
+        point = e.changedTouches[0];
+    } else if (e.touches && e.touches[0]) {
+        point = e.touches[0];
+    }
+    var rect = barEl.getBoundingClientRect();
+    if (!rect.width) {
+        return 0;
+    }
+    return clampPercent((point.clientX - rect.left) / rect.width);
+}
+function seekToPercent (percent) {
+    process.setPercent(percent);
+    var index = controlmanager.index;
+    var curDuration = songList[index].duration;
+    var curTime = curDuration * percent;
+    return handlePlayResult(audiomanager.jumpToPlay(curTime));
+}
+function bindSeek () {
+    var barEl = $scope.find(".pro-wrapper")[0];
+    var $bar = $(barEl);
+    var dragging = false;
+    var activePointer = null;
+    function onDown (e) {
+        dragging = true;
+        process.stop();
+        process.setPercent(percentFromEvent(e, barEl));
+        if (e.pointerId != null && barEl.setPointerCapture) {
+            activePointer = e.pointerId;
+            barEl.setPointerCapture(e.pointerId);
         }
-    })
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+    }
+    function onMove (e) {
+        if (!dragging) {
+            return;
+        }
+        if (e.pointerId != null && activePointer != null && e.pointerId !== activePointer) {
+            return;
+        }
+        process.setPercent(percentFromEvent(e, barEl));
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+    }
+    function onUp (e) {
+        if (!dragging) {
+            return;
+        }
+        if (e.pointerId != null && activePointer != null && e.pointerId !== activePointer) {
+            return;
+        }
+        dragging = false;
+        activePointer = null;
+        seekToPercent(percentFromEvent(e, barEl));
+    }
+    if (window.PointerEvent) {
+        $bar.on("pointerdown", onDown);
+        $bar.on("pointermove", onMove);
+        $bar.on("pointerup pointercancel", onUp);
+    } else {
+        $bar.on("mousedown", onDown);
+        $(document).on("mousemove", onMove);
+        $(document).on("mouseup", onUp);
+        $bar.on("touchstart", onDown);
+        $bar.on("touchmove", onMove);
+        $bar.on("touchend touchcancel", onUp);
+    }
 }
 function bindClick () {
     $scope.on("click", ".play-btn", function () {
@@ -100,6 +140,13 @@ function bindClick () {
         $scope.trigger("player:change",index);
     })
 }
+function preloadNeighbor (currentIndex) {
+    if (!songList || songList.length < 2) {
+        return;
+    }
+    var nextIndex = (currentIndex + 1) % songList.length;
+    audiomanager.preloadNext(songList[nextIndex].audio);
+}
 audiomanager.onEnded = function () {
     process.stop();
     process.setPercent(1);
@@ -108,14 +155,16 @@ audiomanager.onEnded = function () {
 $scope.on("player:change", function (event,index,flag) {
     var shouldPlay = audiomanager.status == "play" || flag;
     root.render(songList[index]);
-    audiomanager.changeSource(songList[index].audio); //顺序很重要，先加载资源
     process.renderAllTime(songList[index].duration);
     process.upData(0);
+    var playResult = audiomanager.switchTo(songList[index].audio, shouldPlay);
     if (shouldPlay) {
-        startPlayback();
+        handlePlayResult(playResult);
     } else {
+        process.stop();
         syncPlayButton();
     }
+    preloadNeighbor(index);
 })
 function getData (url) {
     $.ajax({
@@ -130,7 +179,7 @@ function successFn (data) {
     songList = data;
     $scope.trigger("player:change",0);
     bindClick();
-    bindTouch(); 
+    bindSeek(); 
     playList.renderPlayList(data);
     controlmanager = new root.controlManager(data.length);  
 }
